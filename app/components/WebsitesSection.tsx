@@ -6,13 +6,43 @@ import { useState } from 'react';
 
 const websites = [
 	{
+		title: 'Employee ID Management System',
+		type: 'Web Application',
+		description: 'A centralized employee ID management system for the Ministry of Health and Wellness and the Department of Public Health, enabling employee registration, photo submission, and automated ID card generation with dynamic printing capabilities.',
+		url: '#',
+		context: 'Digital Transformation Unit - Ministry of Economic Affairs',
+		role: 'Full-Stack Developer',
+		technologies: ['PHP', 'JavaScript', 'MariaDB', 'Dynamic PDF Generation', 'Dashboard UI', 'Role-based Access'],
+		features: [
+			'Employee registration and verification',
+			'Photo submission system',
+			'Dynamic ID card generation',
+			'Automated card printing with templates',
+			'Centralized employee data management',
+			'Administrative back office',
+			'Employee information updates',
+			'Category and position management',
+			'Advanced search and filtering',
+			'Analytics dashboard'
+		],
+		images: [
+			'/projects/idmanagement-hero.png',
+			'/projects/idmanagement-dashboard.png',
+			'/projects/idmanagement-employees.png',
+			'/projects/idmanagement-categories.png',
+			'/projects/idmanagement-search.png',
+			'/projects/idmanagement-positions.png'
+		],
+		gradient: 'from-teal-500 to-cyan-500'
+	},
+	{
 		title: 'Jubilee International Ministries',
 		type: 'Website',
 		description: 'A comprehensive church website featuring ministry information, leadership profiles, event management, and visitor engagement tools.',
 		url: 'https://jubileepittintl.com/',
 		context: 'Independent Project',
 		role: 'Full-Stack Developer',
-		technologies: ['PHP', 'JavaScript', 'MySQL', 'HTML/CSS', 'Responsive Design'],
+		technologies: ['PHP', 'WordPress', 'HTML/CSS', 'Responsive Design'],
 		features: [
 			'Ministry showcase and information',
 			'Leadership team profiles',
@@ -36,7 +66,7 @@ const websites = [
 		url: 'https://ournews.bs/',
 		context: 'Plato Alpha',
 		role: 'Full-Stack Developer',
-		technologies: ['PHP', 'JavaScript', 'MySQL', 'API Integration', 'Responsive Design'],
+		technologies: ['WordPress', 'Dropbox API', 'PHP', 'JavaScript', 'MySQL', 'Responsive Design'],
 		features: [
 			'Real-time news feed',
 			'Weather forecast integration',
@@ -58,7 +88,7 @@ const websites = [
 		url: 'https://triblockhr.net/',
 		context: 'Plato Alpha',
 		role: 'Full-Stack Developer',
-		technologies: ['PHP', 'JavaScript', 'MySQL', 'RESTful API', 'Dashboard UI'],
+		technologies: ['Laravel', 'React', 'MySQL', 'RESTful API', 'Dashboard UI'],
 		features: [
 			'Employee timesheet management',
 			'Company document storage',
@@ -71,7 +101,9 @@ const websites = [
 		images: [
 			'/projects/triblock-dashboard.png',
 			'/projects/triblock-timesheets.png',
-			'/projects/triblock-documents.png'
+			'/projects/triblock-documents.png',
+			'/projects/triblock-performancereview.png',
+			'/projects/triblock-performance-review-test.png'
 		],
 		gradient: 'from-indigo-500 to-purple-500'
 	}
@@ -164,19 +196,21 @@ export default function WebsitesSection() {
 										</div>
 
 										{/* Link */}
-										<div>
-											<a
-												href={project.url}
-												target="_blank"
-												rel="noopener noreferrer"
-												className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg font-medium hover:opacity-90 transition-opacity"
-											>
-												Visit Website
-												<svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-													<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-												</svg>
-											</a>
-										</div>
+										{project.url !== '#' && (
+											<div>
+												<a
+													href={project.url}
+													target="_blank"
+													rel="noopener noreferrer"
+													className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg font-medium hover:opacity-90 transition-opacity"
+												>
+													Visit Website
+													<svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+														<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+													</svg>
+												</a>
+											</div>
+										)}
 									</div>
 
 									{/* Screenshots Gallery */}
