@@ -106,7 +106,7 @@ export default function ContactSection() {
             {/* Resume Download */}
             <div className="pt-4">
               <a
-                href="/Brandan Pratt Resume (1)-1.pdf"
+                href="/Brandan Pratt Resume - Web Developer.pdf"
                 target="_blank"
                 className="inline-flex items-center px-6 py-3 bg-black border border-gray-800 rounded-lg font-medium hover:bg-gray-900 transition-colors gap-2"
               >

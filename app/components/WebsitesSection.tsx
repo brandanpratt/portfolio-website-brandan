@@ -94,6 +94,7 @@ const websites = [
 			'Company document storage',
 			'Pay period tracking',
 			'Role-based access control',
+			'Employee performance reviews',
 			'Payroll management',
 			'Dashboard analytics',
 			'Form submissions tracking'
