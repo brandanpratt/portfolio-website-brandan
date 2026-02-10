@@ -4,6 +4,7 @@ import HeroSection from './components/HeroSection';
 import AboutSection from './components/AboutSection';
 import ServicesSection from './components/ServicesSection';
 import ProjectsSection from './components/ProjectsSection';
+import WebsitesSection from './components/WebsitesSection';
 import ContactSection from './components/ContactSection';
 
 export default function FullStackPortfolio() {
@@ -13,6 +14,7 @@ export default function FullStackPortfolio() {
 			<AboutSection />
 			<ServicesSection />
 			<ProjectsSection />
+			<WebsitesSection />
 			<ContactSection />
 		</main>
 	);
