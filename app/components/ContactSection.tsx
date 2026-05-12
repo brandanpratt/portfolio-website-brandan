@@ -106,7 +106,7 @@ export default function ContactSection() {
             {/* Resume Download */}
             <div className="pt-4">
               <a
-                href="/Brandan Pratt Resume - Web Developer.pdf"
+                href="/Brandan Pratt's Resume-1.pdf"
                 target="_blank"
                 className="inline-flex items-center px-6 py-3 bg-black border border-gray-800 rounded-lg font-medium hover:bg-gray-900 transition-colors gap-2"
               >
@@ -135,7 +135,7 @@ export default function ContactSection() {
               <h4 className="font-medium text-white mb-4">Connect with me</h4>
               <div className="flex gap-4">
                 <a
-                  href="https://github.com/brantheeman"
+                  href="https://github.com/brandanpratt"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 transition-colors"
