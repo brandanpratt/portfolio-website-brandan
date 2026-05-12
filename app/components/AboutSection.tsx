@@ -7,39 +7,39 @@ const skills = [
     category: "Frontend",
     technologies: [
       { name: "React", level: 95 },
-      { name: "Next.js", level: 90 },
-      { name: "TypeScript", level: 85 },
-      { name: "Tailwind CSS", level: 90 },
+      { name: "Next.js", level: 92 },
+      { name: "TypeScript", level: 90 },
+      { name: "Tailwind CSS", level: 92 },
       { name: "JavaScript", level: 95 },
     ],
   },
   {
-    category: "Backend",
+    category: "Backend & Full-Stack",
     technologies: [
       { name: "Laravel", level: 90 },
       { name: "PHP", level: 85 },
-      { name: "Go", level: 80 },
-      { name: "Python", level: 85 },
-      { name: "Node.js", level: 80 },
+      { name: "Python", level: 88 },
+      { name: "Go", level: 82 },
+      { name: "Node.js", level: 85 },
     ],
   },
   {
-    category: "Database & Cloud",
+    category: "Data Engineering & Cloud",
     technologies: [
-      { name: "PostgreSQL", level: 85 },
-      { name: "MySQL", level: 80 },
-      { name: "Redis", level: 75 },
-      { name: "AWS", level: 80 },
-      { name: "Docker", level: 75 },
+      { name: "Snowflake", level: 88 },
+      { name: "Apache Airflow", level: 85 },
+      { name: "dbt", level: 87 },
+      { name: "PostgreSQL", level: 88 },
+      { name: "AWS/Docker", level: 82 },
     ],
   },
 ];
 
 const stats = [
-  { label: "Years Experience", value: "4+" },
-  { label: "Projects Completed", value: "12+" },
-  { label: "Technologies Mastered", value: "15+" },
-  { label: "Happy Clients", value: "6+" },
+  { label: "Years Experience", value: "5+" },
+  { label: "Projects Completed", value: "15+" },
+  { label: "Technologies Mastered", value: "20+" },
+  { label: "Happy Clients", value: "8+" },
 ];
 
 export default function AboutSection() {
@@ -60,8 +60,7 @@ export default function AboutSection() {
             </span>
           </h2>
           <p className="text-gray-400 text-lg max-w-3xl mx-auto">
-            Passionate full-stack developer from The Bahamas, creating
-            innovative solutions that bridge technology and business needs.
+            Full-stack and data engineering developer from The Bahamas, creating scalable solutions that blend cutting-edge technology with real-world business impact.
           </p>
         </motion.div>
 
@@ -78,22 +77,13 @@ export default function AboutSection() {
               <div className="space-y-4 text-gray-400 leading-relaxed">
                 <p>
                   Based in The Bahamas, I&apos;ve been crafting digital
-                  experiences for over 4 years. My journey began with a
-                  curiosity about how things work under the hood, which led me
-                  into the world of programming and never looked back.
+                  solutions for over 5 years. What started as a curiosity about how technology works has evolved into a passion for building full-stack applications and data platforms that solve real problems at scale.
                 </p>
                 <p>
-                  I specialize in building full-stack applications that solve
-                  real business problems. From e-commerce platforms handling
-                  thousands of transactions to analytics dashboards providing
-                  actionable insights, I love creating solutions that make a
-                  difference.
+                  My expertise spans both frontend and backend development, with a growing specialization in data engineering. I love architecting end-to-end data platforms—from ETL pipelines and cloud warehousing to analytics dashboards—while maintaining strong full-stack capabilities in modern web applications.
                 </p>
                 <p>
-                  When I&apos;m not coding, you&apos;ll find me exploring new
-                  technologies, contributing to open-source projects, or
-                  enjoying the island life. I believe in continuous learning and
-                  staying ahead of industry trends.
+                  Whether I&apos;m optimizing Python ETL workflows, designing Snowflake data architectures, building React interfaces, or orchestrating Apache Airflow pipelines, I approach every project with attention to performance, scalability, and user experience.
                 </p>
               </div>
             </div>
@@ -132,7 +122,7 @@ export default function AboutSection() {
                       />
                     </svg>
                   </div>
-                  <span className="text-gray-300">User Experience</span>
+                  <span className="text-gray-300">Scalability</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
@@ -148,7 +138,7 @@ export default function AboutSection() {
                       />
                     </svg>
                   </div>
-                  <span className="text-gray-300">Performance</span>
+                  <span className="text-gray-300">Data Quality</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-orange-500/20 rounded-lg flex items-center justify-center">
@@ -217,7 +207,7 @@ export default function AboutSection() {
                       clipRule="evenodd"
                     />
                   </svg>
-                  Advanced React & Next.js patterns
+                  End-to-end data platform architecture
                 </li>
                 <li className="flex items-center gap-2">
                   <svg
@@ -231,7 +221,7 @@ export default function AboutSection() {
                       clipRule="evenodd"
                     />
                   </svg>
-                  Microservices with Go
+                  Advanced Next.js & React patterns
                 </li>
                 <li className="flex items-center gap-2">
                   <svg
@@ -245,7 +235,7 @@ export default function AboutSection() {
                       clipRule="evenodd"
                     />
                   </svg>
-                  Cloud-native development
+                  Real-time analytics & visualization
                 </li>
                 <li className="flex items-center gap-2">
                   <svg
@@ -259,7 +249,7 @@ export default function AboutSection() {
                       clipRule="evenodd"
                     />
                   </svg>
-                  AI/ML integration in web apps
+                  Cloud-native & orchestration workflows
                 </li>
               </ul>
             </div>
@@ -304,10 +294,7 @@ export default function AboutSection() {
                           initial={{ width: 0 }}
                           whileInView={{ width: `${tech.level}%` }}
                           viewport={{ once: true }}
-                          transition={{
-                            delay: groupIndex * 0.1 + techIndex * 0.05,
-                            duration: 1,
-                          }}
+                          transition={{ duration: 0.5, delay: techIndex * 0.1 }}
                           className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full"
                         />
                       </div>
