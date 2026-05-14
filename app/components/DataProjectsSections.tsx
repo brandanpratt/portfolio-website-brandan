@@ -55,9 +55,9 @@ const dataProjects = [
             'Deployed on Streamlit Community Cloud'
         ],
         images: [
-            '/projects/data-projects/bahamas-election-1.jpg',
-            '/projects/data-projects/bahamas-election-2.jpg',
-            '/projects/data-projects/bahamas-election-3.jpg'
+            '/projects/data-projects/bahamas-election-1.png',
+            '/projects/data-projects/bahamas-election-2.png',
+            '/projects/data-projects/bahamas-election-3.png'
         ],
         gradient: 'from-orange-500 to-red-500'
     }
