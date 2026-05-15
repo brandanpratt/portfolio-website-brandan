@@ -20,6 +20,7 @@ export default function ContactForm() {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [submitted, setSubmitted] = useState(false);
 	const [errors, setErrors] = useState<Partial<FormData>>({});
+	const [submitError, setSubmitError] = useState<string | null>(null);
 
 	const validateForm = (): boolean => {
 		const newErrors: Partial<FormData> = {};
@@ -56,25 +57,31 @@ export default function ContactForm() {
 		}
 
 		setIsSubmitting(true);
+		setSubmitError(null);
 
 		try {
-			// Create mailto link with form data
-			const subject = encodeURIComponent(formData.subject);
-			const body = encodeURIComponent(
-				`Hi Brandan,\n\nMy name is ${formData.name}.\n\n${formData.message}\n\nBest regards,\n${formData.name}\n${formData.email}`
-			);
-			const mailtoLink = `mailto:brandan.pratt1@gmail.com?subject=${subject}&body=${body}`;
-			
-			// Open email client
-			window.location.href = mailtoLink;
-			
-			// Mark as submitted after a short delay
-			setTimeout(() => {
-				setSubmitted(true);
+			const response = await fetch('/api/send-email', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(formData),
+			});
+
+			const data = await response.json();
+
+			if (!response.ok) {
+				setSubmitError(data.error || 'Failed to send message. Please try again.');
 				setIsSubmitting(false);
-			}, 1000);
+				return;
+			}
+
+			setSubmitted(true);
+			setFormData({ name: '', email: '', subject: '', message: '' });
+			setIsSubmitting(false);
 		} catch (error) {
 			console.error('Error submitting form:', error);
+			setSubmitError('An error occurred. Please try again later.');
 			setIsSubmitting(false);
 		}
 	};
@@ -101,19 +108,34 @@ export default function ContactForm() {
 						<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
 					</svg>
 				</div>
-				<h3 className="text-xl font-semibold mb-2">Thank you for reaching out!</h3>
-				<p className="text-gray-400">
-					Your email client should have opened with your message. If not, you can reach me directly at{' '}
-					<a href="mailto:brandan.pratt1@gmail.com" className="text-blue-400 hover:text-blue-300">
-						brandan.pratt1@gmail.com
-					</a>
+				<h3 className="text-xl font-semibold mb-2">Message sent successfully!</h3>
+				<p className="text-gray-400 mb-4">
+					Thank you for reaching out. I&apos;ll get back to you as soon as possible.
 				</p>
+				<button
+					onClick={() => {
+						setSubmitted(false);
+						setFormData({ name: '', email: '', subject: '', message: '' });
+					}}
+					className="text-blue-400 hover:text-blue-300 transition-colors"
+				>
+					Send another message
+				</button>
 			</motion.div>
 		);
 	}
 
 	return (
 		<form onSubmit={handleSubmit} className="bg-gray-900/50 border border-gray-800 rounded-xl p-8 space-y-6">
+			{submitError && (
+				<motion.div
+					initial={{ opacity: 0, y: -10 }}
+					animate={{ opacity: 1, y: 0 }}
+					className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 text-red-400"
+				>
+					{submitError}
+				</motion.div>
+			)}
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 				<div>
 					<label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">

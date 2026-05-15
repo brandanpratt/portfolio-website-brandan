@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Specific rules for better crawling
+Disallow: /api/
+Disallow: /.next/
+Disallow: /public/
+
+# Sitemap location
+Sitemap: https://portfolio-website-brandan.vercel.app/sitemap.xml
+
+# Crawl delay (optional - helps avoid server overload)
+Crawl-delay: 1

@@ -12,12 +12,24 @@ export default function FullStackPortfolio() {
 	return (
 		<main className="min-h-screen bg-gradient-to-b from-gray-950 to-black text-white">
 			<HeroSection />
-			<AboutSection />
-			<ServicesSection />
-			<ProjectsSection />
-			<DataProjectsSection />
-			<WebsitesSection />
-			<ContactSection />
+			<section id="about">
+				<AboutSection />
+			</section>
+			<section id="services">
+				<ServicesSection />
+			</section>
+			<section id="projects">
+				<ProjectsSection />
+			</section>
+			<section id="data-projects">
+				<DataProjectsSection />
+			</section>
+			<section id="websites">
+				<WebsitesSection />
+			</section>
+			<section id="contact">
+				<ContactSection />
+			</section>
 		</main>
 	);
 }
