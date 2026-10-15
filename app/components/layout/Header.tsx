@@ -29,9 +29,8 @@ export function Header() {
     >
       <div className="container-page flex h-16 items-center justify-between md:h-20">
         <Link href="/" className="group flex items-center gap-3" aria-label="Brandan Pratt — home">
-          <span className="relative grid h-9 w-9 place-items-center rounded-full border border-line bg-surface font-mono text-xs text-paper transition-colors group-hover:border-signal">
+          <span className="grid h-9 w-9 place-items-center rounded-full border border-line bg-surface font-mono text-xs text-paper transition-colors group-hover:border-signal">
             BP
-            <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-aqua animate-pulse-dot" />
           </span>
           <span className="hidden text-sm font-medium text-paper sm:block">Brandan Pratt</span>
         </Link>

@@ -113,13 +113,12 @@ export function AskBrandan() {
         aria-controls="ask-brandan"
         className="fixed bottom-5 right-5 z-[60] flex items-center gap-3 rounded-full border border-signal/40 bg-ink/85 py-2 pl-2 pr-5 text-sm text-paper shadow-[0_0_40px_-10px_var(--color-signal)] backdrop-blur-xl transition-all hover:border-signal md:bottom-8 md:right-8"
       >
-        <span className="relative grid h-9 w-9 place-items-center rounded-full bg-signal text-ink">
+        <span className="grid h-9 w-9 place-items-center rounded-full bg-signal text-ink">
           {open ? (
             <svg viewBox="0 0 16 16" className="h-4 w-4" aria-hidden><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>
           ) : (
             <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="2.2" /><circle cx="5" cy="6" r="1.6" /><circle cx="19" cy="6" r="1.6" /><circle cx="5" cy="18" r="1.6" /><circle cx="19" cy="18" r="1.6" /><path d="M6.3 7l4.2 3.6M17.7 7l-4.2 3.6M6.3 17l4.2-3.6M17.7 17l-4.2-3.6" /></svg>
           )}
-          {!open && <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full border-2 border-ink bg-aqua animate-pulse-dot" />}
         </span>
         {open ? "Close" : "Ask Brandan's AI"}
       </button>
@@ -138,7 +137,6 @@ export function AskBrandan() {
             className="fixed inset-x-3 bottom-20 z-[60] flex max-h-[min(70vh,640px)] flex-col overflow-hidden rounded-3xl border border-line bg-ink/95 shadow-2xl backdrop-blur-2xl md:inset-x-auto md:bottom-28 md:right-8 md:w-[420px]"
           >
             <div className="flex items-center gap-3 border-b border-line px-5 py-4">
-              <span className="h-2 w-2 rounded-full bg-aqua animate-pulse-dot" />
               <div>
                 <p className="text-sm font-medium text-paper">Ask Brandan&apos;s AI</p>
                 <p className="text-xs text-fog">Answers about services, work &amp; pricing. Can make mistakes.</p>
@@ -202,11 +200,7 @@ export function AskBrandan() {
               ))}
 
               {status === "submitted" && (
-                <div className="flex gap-1" aria-label="Thinking">
-                  {[0, 1, 2].map((i) => (
-                    <span key={i} className="h-1.5 w-1.5 rounded-full bg-signal animate-pulse-dot" style={{ animationDelay: `${i * 0.2}s` }} />
-                  ))}
-                </div>
+                <p className="font-mono text-xs text-fog">Thinking…</p>
               )}
               {error && (
                 <p className="rounded-xl border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-200">

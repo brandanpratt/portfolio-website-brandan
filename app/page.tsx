@@ -40,10 +40,7 @@ export default function Home() {
         <HeroScene />
         <div className="container-page relative z-10 pt-28 pb-20">
           <div className="animate-rise">
-            <p className="mb-8 inline-flex items-center gap-2 rounded-full border border-line bg-ink/60 px-4 py-2 font-mono text-xs text-mist backdrop-blur">
-              <span className="h-2 w-2 rounded-full bg-aqua animate-pulse-dot" />
-              {site.availability}
-            </p>
+            <p className="eyebrow mb-8">AI Consultant &amp; Software Engineer · {site.location}</p>
           </div>
           <div className="animate-rise [animation-delay:100ms]">
             <h1 className="max-w-5xl text-[clamp(2.75rem,8vw,7.5rem)] font-medium leading-[0.95] tracking-[-0.035em] text-paper">
@@ -53,8 +50,8 @@ export default function Home() {
           </div>
           <div className="animate-rise [animation-delay:200ms]">
             <p className="mt-8 max-w-xl text-lg leading-relaxed text-mist md:text-xl">
-              AI consultant and software engineer from The Bahamas. I help startups and growing businesses find where AI
-              pays off, then ship the agents, automations and web apps to make it real.
+              I help startups and growing businesses across the Caribbean and beyond find where AI pays off, then ship
+              the agents, automations and web apps to make it real.
             </p>
           </div>
           <div className="mt-10 flex animate-rise flex-col gap-3 [animation-delay:300ms] sm:flex-row">

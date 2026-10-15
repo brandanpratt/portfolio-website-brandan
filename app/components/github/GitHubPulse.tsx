@@ -26,9 +26,7 @@ export async function GitHubPulse() {
     <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
       <Reveal className="glass rounded-3xl p-6 md:p-8">
         <div className="mb-8 flex items-center justify-between">
-          <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-fog">
-            <span className="h-2 w-2 rounded-full bg-aqua animate-pulse-dot" /> Live from GitHub
-          </p>
+          <p className="font-mono text-xs uppercase tracking-widest text-fog">GitHub activity</p>
           <a href={site.links.github} target="_blank" rel="noopener noreferrer" className="font-mono text-xs text-signal hover:underline">
             @{site.githubUser} ↗
           </a>

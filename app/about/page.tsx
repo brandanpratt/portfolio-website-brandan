@@ -50,7 +50,7 @@ export default function AboutPage() {
             <div><dt className="font-mono text-xs uppercase tracking-widest text-fog">Based in</dt><dd className="mt-1 text-paper">{site.location}</dd></div>
             <div><dt className="font-mono text-xs uppercase tracking-widest text-fog">Timezone</dt><dd className="mt-1 text-paper">US Eastern (EST/EDT)</dd></div>
             <div><dt className="font-mono text-xs uppercase tracking-widest text-fog">Working with</dt><dd className="mt-1 text-paper">Startups, SMBs, the public sector</dd></div>
-            <div><dt className="font-mono text-xs uppercase tracking-widest text-fog">Status</dt><dd className="mt-1 flex items-center gap-2 text-paper"><span className="h-2 w-2 rounded-full bg-aqua animate-pulse-dot" />{site.availability}</dd></div>
+            <div><dt className="font-mono text-xs uppercase tracking-widest text-fog">Availability</dt><dd className="mt-1 text-paper">{site.availability}</dd></div>
           </dl>
           <ButtonLink href={site.resume} target="_blank" variant="ghost" className="mt-6 w-full">Download résumé <Arrow /></ButtonLink>
         </Reveal>
