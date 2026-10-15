@@ -1,126 +1,83 @@
 import { Resend } from 'resend';
 import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 
 let resend: Resend | null = null;
 
-// Initialize Resend only if API key is available
 const initializeResend = () => {
-	if (!process.env.RESEND_API_KEY) {
-		return null;
-	}
-	if (!resend) {
-		resend = new Resend(process.env.RESEND_API_KEY);
-	}
+	if (!process.env.RESEND_API_KEY) return null;
+	resend ??= new Resend(process.env.RESEND_API_KEY);
 	return resend;
 };
 
-interface ContactFormData {
-	name: string;
-	email: string;
-	subject: string;
-	message: string;
-}
+const InquirySchema = z.object({
+	name: z.string().trim().min(1).max(100),
+	email: z.email().max(200),
+	company: z.string().trim().max(150).optional().default(''),
+	service: z.string().trim().max(100).optional().default(''),
+	budget: z.string().trim().max(50).optional().default(''),
+	timeline: z.string().trim().max(50).optional().default(''),
+	message: z.string().trim().min(1).max(5000),
+	website: z.string().optional(), // honeypot
+});
+
+const escapeHtml = (s: string) =>
+	s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
 
 export async function POST(request: NextRequest) {
 	try {
 		const resendClient = initializeResend();
-
-		if (!resendClient || !process.env.RESEND_API_KEY) {
+		if (!resendClient) {
 			return NextResponse.json(
-				{ error: 'Email service is not configured. Please set RESEND_API_KEY.' },
+				{ error: 'Email service is not configured. Please email me directly.' },
 				{ status: 503 }
 			);
 		}
 
-		const body: ContactFormData = await request.json();
-
-		// Validate input
-		if (!body.name || !body.email || !body.subject || !body.message) {
-			return NextResponse.json(
-				{ error: 'Missing required fields' },
-				{ status: 400 }
-			);
+		const parsed = InquirySchema.safeParse(await request.json().catch(() => null));
+		if (!parsed.success) {
+			return NextResponse.json({ error: 'Please check the form fields and try again.' }, { status: 400 });
 		}
+		const body = parsed.data;
 
-		// Validate email format
-		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		if (!emailRegex.test(body.email)) {
-			return NextResponse.json(
-				{ error: 'Invalid email format' },
-				{ status: 400 }
-			);
-		}
+		// Bots fill the hidden field; pretend success.
+		if (body.website) return NextResponse.json({ success: true }, { status: 200 });
 
-		// Send email using Resend
+		const rows = [
+			['From', `${body.name} <${body.email}>`],
+			['Company', body.company],
+			['Interested in', body.service],
+			['Budget', body.budget],
+			['Timeline', body.timeline],
+		]
+			.filter(([, v]) => v)
+			.map(([k, v]) => [k, escapeHtml(v)]);
+
 		const response = await resendClient.emails.send({
-			from: 'Contact Form <onboarding@resend.dev>',
+			from: process.env.CONTACT_FROM ?? 'Portfolio Inquiry <onboarding@resend.dev>',
 			to: process.env.CONTACT_EMAIL || 'brandan.pratt1@gmail.com',
 			replyTo: body.email,
-			subject: `Portfolio Contact: ${body.subject}`,
+			subject: `New inquiry: ${body.service || 'General'} — ${body.name}${body.company ? ` (${body.company})` : ''}`,
 			html: `
-				<!DOCTYPE html>
-				<html>
-					<head>
-						<style>
-							body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-							.container { max-width: 600px; margin: 0 auto; padding: 20px; }
-							.header { background: linear-gradient(135deg, #3b82f6 0%, #a855f7 100%); color: white; padding: 20px; border-radius: 8px 8px 0 0; }
-							.content { background: #f9fafb; padding: 20px; border-radius: 0 0 8px 8px; }
-							.field { margin-bottom: 16px; }
-							.label { font-weight: 600; color: #1f2937; margin-bottom: 4px; }
-							.value { color: #4b5563; padding: 8px; background: white; border-radius: 4px; border-left: 4px solid #3b82f6; }
-							.footer { margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb; font-size: 12px; color: #6b7280; }
-						</style>
-					</head>
-					<body>
-						<div class="container">
-							<div class="header">
-								<h1 style="margin: 0;">New Contact Form Submission</h1>
-							</div>
-							<div class="content">
-								<div class="field">
-									<div class="label">From:</div>
-									<div class="value"><strong>${body.name}</strong><br>${body.email}</div>
-								</div>
-								<div class="field">
-									<div class="label">Subject:</div>
-									<div class="value">${body.subject}</div>
-								</div>
-								<div class="field">
-									<div class="label">Message:</div>
-									<div class="value">${body.message.split('\n').join('<br>')}</div>
-								</div>
-								<div class="footer">
-									<p>This email was sent from your portfolio contact form.</p>
-								</div>
-							</div>
-						</div>
-					</body>
-				</html>
+				<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:600px;margin:0 auto;padding:24px;color:#0f141c">
+					<h1 style="font-size:20px;margin:0 0 16px">New project inquiry</h1>
+					<table style="width:100%;border-collapse:collapse;margin-bottom:16px">
+						${rows.map(([k, v]) => `<tr><td style="padding:6px 12px 6px 0;color:#6b7280;white-space:nowrap;vertical-align:top">${k}</td><td style="padding:6px 0">${v}</td></tr>`).join('')}
+					</table>
+					<div style="padding:16px;background:#f3f6f9;border-left:4px solid #22e1ff;border-radius:4px;white-space:pre-wrap">${escapeHtml(body.message)}</div>
+					<p style="margin-top:24px;font-size:12px;color:#6b7280">Sent from the portfolio contact form. Reply to respond directly.</p>
+				</div>
 			`,
 		});
 
 		if (response.error) {
 			console.error('Resend error:', response.error);
-			return NextResponse.json(
-				{ error: 'Failed to send email' },
-				{ status: 500 }
-			);
+			return NextResponse.json({ error: 'Failed to send. Please email me directly.' }, { status: 500 });
 		}
 
-		return NextResponse.json(
-			{ 
-				success: true, 
-				message: 'Email sent successfully',
-				id: response.data?.id 
-			},
-			{ status: 200 }
-		);
+		return NextResponse.json({ success: true, id: response.data?.id }, { status: 200 });
 	} catch (error) {
 		console.error('Error in send-email route:', error);
-		return NextResponse.json(
-			{ error: 'Internal server error' },
-			{ status: 500 }
-		);
+		return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
 	}
 }

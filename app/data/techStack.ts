@@ -2,10 +2,13 @@ export type TechItem = {
   name: string;
   slug: string;
   color: string;
-  category: "frontend" | "backend" | "data" | "devops";
+  category: "ai" | "frontend" | "backend" | "data" | "devops";
 };
 
 export const techStack: TechItem[] = [
+  { name: "Claude", slug: "claude", color: "D97757", category: "ai" },
+  { name: "Cursor", slug: "cursor", color: "FFFFFF", category: "ai" },
+  { name: "Vercel AI SDK", slug: "vercel", color: "FFFFFF", category: "ai" },
   { name: "React", slug: "react", color: "61DAFB", category: "frontend" },
   { name: "Next.js", slug: "nextdotjs", color: "FFFFFF", category: "frontend" },
   { name: "TypeScript", slug: "typescript", color: "3178C6", category: "frontend" },
@@ -17,6 +20,7 @@ export const techStack: TechItem[] = [
   { name: "Go", slug: "go", color: "00ADD8", category: "backend" },
   { name: "Node.js", slug: "nodedotjs", color: "339933", category: "backend" },
   { name: "PostgreSQL", slug: "postgresql", color: "4169E1", category: "backend" },
+  { name: "MySQL", slug: "mysql", color: "4479A1", category: "backend" },
   { name: "Snowflake", slug: "snowflake", color: "29B5E8", category: "data" },
   { name: "Apache Airflow", slug: "apacheairflow", color: "017CEE", category: "data" },
   { name: "Pandas", slug: "pandas", color: "150458", category: "data" },
@@ -24,6 +28,7 @@ export const techStack: TechItem[] = [
 ];
 
 export const techByCategory = {
+  ai: techStack.filter((t) => t.category === "ai"),
   frontend: techStack.filter((t) => t.category === "frontend"),
   backend: techStack.filter((t) => t.category === "backend"),
   data: techStack.filter((t) => t.category === "data"),

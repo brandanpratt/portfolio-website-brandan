@@ -1,50 +1,17 @@
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from "next";
+import { SITE_URL } from "./data/site";
+import { projects } from "./data/projects";
+import { getAllPosts } from "./lib/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-	const baseUrl = 'https://portfolio-website-brandan.vercel.app';
-
-	return [
-		{
-			url: baseUrl,
-			lastModified: new Date(),
-			changeFrequency: 'weekly',
-			priority: 1.0,
-		},
-		{
-			url: `${baseUrl}#about`,
-			lastModified: new Date(),
-			changeFrequency: 'monthly',
-			priority: 0.8,
-		},
-		{
-			url: `${baseUrl}#services`,
-			lastModified: new Date(),
-			changeFrequency: 'monthly',
-			priority: 0.8,
-		},
-		{
-			url: `${baseUrl}#projects`,
-			lastModified: new Date(),
-			changeFrequency: 'weekly',
-			priority: 0.9,
-		},
-		{
-			url: `${baseUrl}#data-projects`,
-			lastModified: new Date(),
-			changeFrequency: 'weekly',
-			priority: 0.8,
-		},
-		{
-			url: `${baseUrl}#websites`,
-			lastModified: new Date(),
-			changeFrequency: 'weekly',
-			priority: 0.8,
-		},
-		{
-			url: `${baseUrl}#contact`,
-			lastModified: new Date(),
-			changeFrequency: 'monthly',
-			priority: 0.7,
-		},
-	];
+  const now = new Date();
+  const pages = ["", "/services", "/work", "/about", "/blog", "/contact"].map((path) => ({
+    url: `${SITE_URL}${path}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: path === "" ? 1 : 0.8,
+  }));
+  const work = projects.map((p) => ({ url: `${SITE_URL}/work/${p.slug}`, lastModified: now, priority: 0.6 }));
+  const posts = getAllPosts().map((p) => ({ url: `${SITE_URL}/blog/${p.slug}`, lastModified: new Date(p.date), priority: 0.7 }));
+  return [...pages, ...work, ...posts];
 }

@@ -1,145 +1,100 @@
-import type { Metadata, Viewport } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
-import './globals.css';
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { SITE_URL, site } from "./data/site";
+import { Header } from "./components/layout/Header";
+import { Footer } from "./components/layout/Footer";
+import { SmoothScroll } from "./components/layout/SmoothScroll";
+import { AskBrandan } from "./components/chat/AskBrandan";
+import { JsonLd, siteGraph } from "./lib/jsonld";
+import "./globals.css";
 
-const geistSans = Geist({
-	variable: '--font-geist-sans',
-	subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-	variable: '--font-geist-mono',
-	subsets: ['latin'],
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
 });
 
 export const viewport: Viewport = {
-	width: 'device-width',
-	initialScale: 1,
-	maximumScale: 5,
-	userScalable: true,
+  themeColor: "#05070a",
+  colorScheme: "dark",
 };
 
 export const metadata: Metadata = {
-	title: 'Brandan Pratt - Full-Stack Developer | Portfolio',
-	description:
-		'Welcome to my portfolio! I am a passionate full-stack developer who bridges the gap between frontend and backend development. Specializing in creating complete web solutions, from beautiful user interfaces to robust server architectures.',
-	keywords: [
-		'Full-Stack Developer',
-		'Software Engineer',
-		'Frontend Development',
-		'Backend Development',
-		'React',
-		'Next.js',
-		'Node.js',
-		'TypeScript',
-		'Database Design',
-		'API Development',
-		'Cloud Solutions',
-		'DevOps',
-		'System Architecture',
-		'Web Development',
-		'Brandan Pratt',
-		'Web Developer',
-		'Software Developer',
-		'Developer for hire',
-	],
-	authors: [{ name: 'Brandan Pratt', url: 'https://portfolio-website-brandan.vercel.app' }],
-	creator: 'Brandan Pratt',
-	metadataBase: new URL('https://portfolio-website-brandan.vercel.app'),
-	alternates: {
-		canonical: 'https://portfolio-website-brandan.vercel.app',
-	},
-	openGraph: {
-		title: 'Brandan Pratt - Full-Stack Developer Portfolio',
-		description:
-			'Passionate full-stack developer creating complete web solutions. Explore my projects and technical expertise across the entire development stack.',
-		url: 'https://portfolio-website-brandan.vercel.app',
-		siteName: 'Brandan Pratt - Portfolio',
-		images: [
-			{
-				url: '/og-image.jpg',
-				width: 1200,
-				height: 630,
-				alt: 'Brandan Pratt - Full-Stack Developer Portfolio',
-				type: 'image/jpeg',
-			},
-		],
-		locale: 'en_US',
-		type: 'website',
-	},
-	twitter: {
-		card: 'summary_large_image',
-		title: 'Brandan Pratt - Full-Stack Developer',
-		description:
-			'Passionate full-stack developer creating complete web solutions. Explore my projects and technical expertise across the entire development stack.',
-		creator: '@brxn94',
-		images: ['/og-image.jpg'],
-	},
-	robots: {
-		index: true,
-		follow: true,
-		'max-image-preview': 'large',
-		'max-snippet': -1,
-		'max-video-preview': -1,
-		googleBot: {
-			index: true,
-			follow: true,
-			'max-video-preview': -1,
-			'max-image-preview': 'large',
-			'max-snippet': -1,
-		},
-	},
-	verification: {
-		google: '', // Add your Google Search Console verification code here
-	},
-	category: 'Technology',
-	other: {
-		'og:type': 'website',
-		'og:locale': 'en_US',
-	},
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${site.name} — AI Consultant & Software Engineer | Bahamas & Remote`,
+    template: `%s — ${site.name}`,
+  },
+  description: site.description,
+  keywords: [
+    "AI consultant",
+    "AI agents",
+    "AI automation",
+    "fractional CTO",
+    "AI consultant Bahamas",
+    "AI consultant Caribbean",
+    "software engineer Bahamas",
+    "Next.js developer",
+    "web app development",
+    "LLM integration",
+    "Brandan Pratt",
+  ],
+  authors: [{ name: site.name, url: SITE_URL }],
+  creator: site.name,
+  alternates: {
+    canonical: "/",
+    types: { "application/rss+xml": `${SITE_URL}/feed.xml` },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: SITE_URL,
+    siteName: site.name,
+    title: `${site.name} — ${site.tagline}`,
+    description: site.description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    creator: "@brxn94",
+    title: `${site.name} — ${site.tagline}`,
+    description: site.description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
+  },
+  ...(process.env.GOOGLE_SITE_VERIFICATION && {
+    verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
+  }),
+  category: "technology",
 };
 
-export default function RootLayout({
-	children,
-}: Readonly<{
-	children: React.ReactNode;
-}>) {
-	const jsonLd = {
-		'@context': 'https://schema.org',
-		'@type': 'Person',
-		'@id': 'https://portfolio-website-brandan.vercel.app/#person',
-		name: 'Brandan Pratt',
-		url: 'https://portfolio-website-brandan.vercel.app',
-		description: 'Full-Stack Developer and Software Engineer',
-		jobTitle: 'Full-Stack Developer',
-		sameAs: [
-			'https://twitter.com/brxn94',
-			'https://github.com/brxn94',
-			'https://www.linkedin.com/in/brandan-pratt',
-		],
-		knowsAbout: [
-			'React',
-			'Next.js',
-			'Node.js',
-			'TypeScript',
-			'Full-Stack Development',
-			'Web Development',
-			'Backend Development',
-			'Frontend Development',
-		],
-	};
-
-	return (
-		<html lang="en">
-			<head>
-				<script
-					type="application/ld+json"
-					dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-				/>
-			</head>
-			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-				{children}
-			</body>
-		</html>
-	);
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}>
+      <body className="min-h-dvh font-sans antialiased">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-signal focus:px-4 focus:py-2 focus:text-ink"
+        >
+          Skip to content
+        </a>
+        <JsonLd data={siteGraph} />
+        <SmoothScroll>
+          <Header />
+          <main id="main">{children}</main>
+          <Footer />
+        </SmoothScroll>
+        <AskBrandan />
+        <Analytics />
+        <SpeedInsights />
+      </body>
+    </html>
+  );
 }
