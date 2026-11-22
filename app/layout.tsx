@@ -3,10 +3,6 @@ import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { SITE_URL, site } from "./data/site";
-import { Header } from "./components/layout/Header";
-import { Footer } from "./components/layout/Footer";
-import { SmoothScroll } from "./components/layout/SmoothScroll";
-import { AskBrandan } from "./components/chat/AskBrandan";
 import { JsonLd, siteGraph } from "./lib/jsonld";
 import "./globals.css";
 
@@ -65,9 +61,8 @@ export const metadata: Metadata = {
     description: site.description,
   },
   robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
+    index: false,
+    follow: false,
   },
   ...(process.env.GOOGLE_SITE_VERIFICATION && {
     verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
@@ -86,12 +81,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           Skip to content
         </a>
         <JsonLd data={siteGraph} />
-        <SmoothScroll>
-          <Header />
-          <main id="main">{children}</main>
-          <Footer />
-        </SmoothScroll>
-        <AskBrandan />
+        <main id="main">{children}</main>
         <Analytics />
         <SpeedInsights />
       </body>
